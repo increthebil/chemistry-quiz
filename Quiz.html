@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chemistry Quiz</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #f7f8fa;
+  }
+  .container {
+    text-align: center;
+    width: 100%;
+    max-width: 600px;
+  }
+  header {
+    background-color: #4e7d96;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+  }
+  header h1 {
+    margin: 0;
+    font-size: 2.5em;
+  }
+  .quiz, .result {
+    display: none;
+  }
+  .options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px;
+  }
+  .option-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1em;
+    cursor: pointer;
+  }
+  button {
+    background-color: #4e7d96;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1em;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header>
+    <h1>Chemistry</h1>
+    <p>Test your chemistry knowledge and see how much you care!</p>
+    <button onclick="startQuiz()">Take a Quiz</button>
+  </header>
+
+  <div class="quiz">
+    <p id="question"></p>
+    <div class="options">
+      <label class="option-label">
+        <button onclick="checkAnswer('A')">A</button>
+        <span id="optionA"></span>
+      </label>
+      <label class="option-label">
+        <button onclick="checkAnswer('B')">B</button>
+        <span id="optionB"></span>
+      </label>
+      <label class="option-label">
+        <button onclick="checkAnswer('C')">C</button>
+        <span id="optionC"></span>
+      </label>
+    </div>
+  </div>
+
+  <div class="result">
+    <h2>Selamat kamu telah menyelesaikan quiz sayang!</h2>
+    <p id="scoreMessage"></p>
+  </div>
+</div>
+
+<script>
+  const questions = [
+    { text: "Pertanyaan 1: Apa makanan kesukaan pasanganmu?", options: ["Udang asam manis", "Ayam Opor", "Ikan sarden"], correct: "A" },
+    { text: "Pertanyaan 2: Apa warna kesukaan aku?", options: ["Biru dan Kuning", "Hitam dan Merah", "Abu-abu"], correct: "B" },
+    { text: "Pertanyaan 3: Genre Film yang aku suka?", options: ["Horror dan Romantic", "Action", "Cartoon dan Comedy"], correct: "C" },
+    { text: "Pertanyaan 4: Siapa nama kesayangan aku?", options: ["Zivennia oey", "Hyuna", "Kim Jiwon"], correct: "A" },
+    { text: "Pertanyaan 5: Kamu tau gak hobi aku apa?", options: ["Nongkrong sama teman", "Pelajari hal baru", "Bermain RP"], correct: "B" }
+  ];
+
+  let currentQuestion = 0;
+  let score = 0;
+
+  function startQuiz() {
+    document.querySelector('header').style.display = 'none';
+    document.querySelector('.quiz').style.display = 'block';
+    showQuestion();
+  }
+
+  function showQuestion() {
+    if (currentQuestion < questions.length) {
+      const question = questions[currentQuestion];
+      document.getElementById('question').textContent = question.text;
+      document.getElementById('optionA').textContent = question.options[0];
+      document.getElementById('optionB').textContent = question.options[1];
+      document.getElementById('optionC').textContent = question.options[2];
+    } else {
+      showResult();
+    }
+  }
+
+  function checkAnswer(answer) {
+    if (answer === questions[currentQuestion].correct) {
+      score++;
+    }
+    currentQuestion++;
+    showQuestion();
+  }
+
+  function showResult() {
+    document.querySelector('.quiz').style.display = 'none';
+    document.querySelector('.result').style.display = 'block';
+
+    let message;
+    if (score === 2) {
+      message = "Score kamu: Agak sayang";
+    } else if (score === 3) {
+      message = "Score kamu: Hampir sayang";
+    } else if (score === 5) {
+      message = "Score kamu: Sangat sayang";
+    } else {
+      message = "Score kamu: Kurang sayang";
+    }
+    document.getElementById('scoreMessage').textContent = message;
+  }
+</script>
+
+</body>
+</html>
